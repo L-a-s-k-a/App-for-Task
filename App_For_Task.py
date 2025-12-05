@@ -2,8 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
 
-truth_table = None
-
 def calculate_task():
     # Получаем дату из поля ввода
     birth_date_str = entry.get().strip()
