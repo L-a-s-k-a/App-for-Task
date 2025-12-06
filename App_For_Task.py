@@ -53,13 +53,13 @@ def calculate_task():
             else:
                 truth_table += "Все задания выполняются в базисе 4ИЛИ-НЕ\n"
             
-            if ((task_calculate / 3) % 2) == 1:
-                truth_table += "Микросхема дешифратора К155ИД3\n"
-                truth_table += "Микросхема мультиплексора К155КП7"
-            elif ((task_calculate / 2) % 2) == 0:
+            if (int(task_calculate / 3) % 2) == 1:
                 truth_table += "Микросхема дешифратора К155ИД4\n"
+                truth_table += "Микросхема мультиплексора К155КП7"
+            elif (int(task_calculate / 2) % 2) == 0:
+                truth_table += "Микросхема дешифратора К155ИД3\n"
                 truth_table += "Микросхема мультиплексора К155КП2"
-            elif ((task_calculate / 2) % 2) == 1:
+            elif (int(task_calculate / 2) % 2) == 1:
                 truth_table += "Микросхема дешифратора К155ИД10\n"
                 truth_table += "Микросхема мультиплексора К155КП1"
             else:
@@ -74,17 +74,17 @@ def calculate_task():
             else:
                 truth_table += "Все задания выполняются в базисе 3И-НЕ\n"
                 
-            if ((task_calculate / 3) % 2) == 1:
+            if (int(task_calculate / 3) % 2) == 1:
                 truth_table += "Микросхема дешифратора К155ИД10\n"
                 truth_table += "Микросхема мультиплексора К155КП5"
-            elif ((task_calculate / 2) % 2) == 0:
+            elif (int(task_calculate / 2) % 2) == 0:
                 truth_table += "Микросхема дешифратора К155ИД1\n"
                 truth_table += "Микросхема мультиплексора К155КП7"
-            elif ((task_calculate / 2) % 2) == 1:
-                truth_table += "Микросхема дешифратора К155ИД3\n"
+            elif (int(task_calculate / 2) % 2) == 1:
+                truth_table += "Микросхема дешифратора К155ИД4\n"
                 truth_table += "Микросхема мультиплексора К155КП2"
             else:
-                truth_table += "Микросхема дешифратора К155ИД4\n"
+                truth_table += "Микросхема дешифратора К155ИД3\n"
                 truth_table += "Микросхема мультиплексора К155КП1"
         
         elif 26 <= task_calculate <= 37:
@@ -95,17 +95,17 @@ def calculate_task():
             else:
                 truth_table += "Все задания выполняются в базисе 2И-НЕ\n"
                 
-            if ((task_calculate / 3) % 2) == 1:
-                truth_table += "Микросхема дешифратора К155ИД4\n"
+            if (int(task_calculate / 3) % 2) == 1:
+                truth_table += "Микросхема дешифратора К155ИД3\n"
                 truth_table += "Микросхема мультиплексора К155КП5"
-            elif ((task_calculate / 2) % 2) == 0:
+            elif (int(task_calculate / 2) % 2) == 0:
                 truth_table += "Микросхема дешифратора К155ИД10\n"
                 truth_table += "Микросхема мультиплексора К155КП7"
-            elif ((task_calculate / 2) % 2) == 1:
+            elif (int(task_calculate / 2) % 2) == 1:
                 truth_table += "Микросхема дешифратора К155ИД1\n"
                 truth_table += "Микросхема мультиплексора К155КП2"
             else:
-                truth_table += "Микросхема дешифратора К155ИД3\n"
+                truth_table += "Микросхема дешифратора К155ИД4\n"
                 truth_table += "Микросхема мультиплексора К155КП1"
         
         elif task_calculate >= 38:
@@ -116,14 +116,14 @@ def calculate_task():
             else:
                 truth_table += "Все задания выполняются в базисе 3ИЛИ-НЕ\n"
             
-            if ((task_calculate / 3) % 2) == 1:
+            if (int(task_calculate / 3) % 2) == 1:
                 truth_table += "Микросхема дешифратора К155ИД1\n"
                 truth_table += "Микросхема мультиплексора К155КП1"
-            elif ((task_calculate / 2) % 2) == 0:
-                truth_table += "Микросхема дешифратора К155ИД3\n"
-                truth_table += "Микросхема мультиплексора К155КП5"
-            elif ((task_calculate / 2) % 2) == 1:
+            elif (int(task_calculate / 2) % 2) == 0:
                 truth_table += "Микросхема дешифратора К155ИД4\n"
+                truth_table += "Микросхема мультиплексора К155КП5"
+            elif (int(task_calculate / 2) % 2) == 1:
+                truth_table += "Микросхема дешифратора К155ИД3\n"
                 truth_table += "Микросхема мультиплексора К155КП7"
             else:
                 truth_table += "Микросхема дешифратора К155ИД10\n"
@@ -145,6 +145,9 @@ def calculate_task():
             binar_text_widget.insert(1.0, (str(bin_calculate) + " = " + str(bin_check)))
             binar_text_widget.tag_add("center", "1.0", "end") # Применяем тег центрирования ко всему тексту
             binar_text_widget.config(state='disabled')
+        print(task_calculate % 2)
+        print(int(task_calculate / 3) % 2)
+        print(int(task_calculate / 2) % 2)
     
     except ValueError:
         messagebox.showerror("Ошибка", "Пожалуйста, введите дату в формате ДД.ММ.ГГГГ\nНапример: 12.08.2001")
@@ -194,7 +197,7 @@ def on_focusout(event):
 
 # Создание и настройка главного окна
 root = tk.Tk()
-root.title("Калькулятор задания")
+root.title("Генератор вариантов индивидуального домашнего задания")
 try:
     # Создаем пустое прозрачное изображение минимального размера
     transparent_icon = tk.PhotoImage(width=1, height=1)
