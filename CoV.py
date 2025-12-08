@@ -5,6 +5,8 @@
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
+import sys
+import os
 
 def calculate_task():
     # Получаем дату из поля ввода
@@ -191,16 +193,21 @@ def on_focusout(event):
         entry.insert(0, "дд.мм.гггг")
         entry.config(fg='grey')  # Серый цвет для подсказки
 
+def resource_path(relative_path):
+    """ Возвращает корректный путь для ресурсов, работает и в разработке, и в собранном .exe """
+    if hasattr(sys, '_MEIPASS'):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+# Использование в коде (например, для Tkinter)
+icon_path = resource_path("icon.ico")
+
 # Создание и настройка главного окна
 root = tk.Tk()
 root.title("Генератор вариантов индивидуального домашнего задания")
-try:
-    # Создаем пустое прозрачное изображение минимального размера
-    transparent_icon = tk.PhotoImage(width=1, height=1)
-    # Устанавливаем его как иконку
-    root.iconphoto(True, transparent_icon)
-except tk.TclError:
-    pass
+root.iconbitmap("icon.ico")
 root.geometry("655x460")  # Размеры окна
 root.resizable(False, False) # Запрет на изменение размеров по Х и У
 
