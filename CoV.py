@@ -27,8 +27,22 @@ def calculate_task():
         task_calculate = birth.day + birth.month
         
         # Вычисляем двоичное число по дате рождения
-        bin_calculate = str(birth.day) + str(birth.month) + str(birth.year)
-        bin_check = format(int(bin_calculate), '032b')
+        if(birth.day < 10 and birth.month > 10): 
+            birth_day = "0" + str(birth.day)
+            birth_month = str(birth.month)
+        elif(birth.day > 10 and birth.month < 10):
+            birth_day = str(birth.day)
+            birth_month = "0" + str(birth.month)
+        elif(birth.day < 10 and birth.month < 10):
+            birth_day = "0" + str(birth.day) 
+            birth_month = "0" + str(birth.month)
+        else: 
+            birth_day = str(birth.day)
+            birth_month = str(birth.month)
+        bin_calculate = birth_day + birth_month + str(birth.year)
+        dec_num = decimal_format(bin_calculate)
+        bin_check = binar_format(format(int(bin_calculate), '032b'))
+        # bin_check = format_with_spaces(format((int(bin_calculate))))
         
         # Обработка некорректно введённой даты рождения (Больше текущей даты)
         if (birth.year > today.year or (birth.year == today.year and birth.month > today.month) or (birth.year == today.year and birth.month == today.month and birth.day > today.day)):
@@ -143,14 +157,32 @@ def calculate_task():
             # Обновляем поле с двоичным результатом
             binar_text_widget.config(state='normal', fg='black')
             binar_text_widget.delete(1.0, tk.END)
-            binar_text_widget.insert(1.0, (str(bin_calculate) + " = " + str(bin_check)))
+            binar_text_widget.insert(1.0, (str(dec_num) + " = " + str(bin_check)))
             binar_text_widget.tag_add("center", "1.0", "end") # Применяем тег центрирования ко всему тексту
             binar_text_widget.config(state='disabled')
     
     except ValueError:
         messagebox.showerror("Ошибка", "Пожалуйста, введите дату в формате ДД.ММ.ГГГГ\nНапример: 12.08.2001")
         clear_all()
-        
+
+# Функция задаёт пробелы между 4-мя разрядами двоичного числа, начиная справа
+def binar_format(number_str):
+    # Удаление возможных пробелов и переворот строки для обработки справа налево
+    s = number_str.replace(' ', '')[::-1]
+    # Разбиение на группы по 4 символа и соединение пробелом
+    grouped = ' '.join([s[i:i+4] for i in range(0, len(s), 4)])
+    # Возвращение строки в правильном порядке
+    return grouped[::-1]
+
+# Функция задаёт пробелы между 3-мя чтслами десятичного числа, начиная справа
+def decimal_format(number_str):
+    # Удаление возможных пробелов и переворот строки для обработки справа налево
+    s = number_str.replace(' ', '')[::-1]
+    # Разбиение на группы по 3 символа и соединение пробелом
+    grouped = ' '.join([s[i:i+3] for i in range(0, len(s), 3)])
+    # Возвращение строки в правильном порядке
+    return grouped[::-1]
+
 # Функция очищает поле ввода и устанавливает фокус на него
 def clear_input():
     entry.delete(0, tk.END)
